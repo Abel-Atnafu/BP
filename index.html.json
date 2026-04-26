@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Your BP Diet Plan</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --earth: #6B3A2A;
+    --gold: #C8902A;
+    --cream: #FAF4EC;
+    --green: #2D5A3D;
+    --red: #B03A2E;
+    --light: #F0E8DA;
+    --dark: #1C1008;
+    --accent: #E8C97A;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--cream);
+    color: var(--dark);
+    min-height: 100vh;
+  }
+
+  .hero {
+    background: linear-gradient(135deg, var(--earth) 0%, #3D1F12 60%, var(--green) 100%);
+    color: white;
+    padding: 48px 24px 40px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.04'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    opacity: 0.5;
+  }
+
+  .hero-tag {
+    display: inline-block;
+    background: rgba(200,144,42,0.3);
+    border: 1px solid var(--accent);
+    color: var(--accent);
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 4px 14px;
+    border-radius: 20px;
+    margin-bottom: 16px;
+  }
+
+  .hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 32px;
+    font-weight: 700;
+    line-height: 1.2;
+    margin-bottom: 8px;
+  }
+
+  .hero p {
+    font-size: 14px;
+    opacity: 0.8;
+    max-width: 340px;
+    margin: 0 auto 20px;
+    line-height: 1.6;
+  }
+
+  .profile-chips {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  .chip {
+    background: rgba(255,255,255,0.15);
+    border: 1px solid rgba(255,255,255,0.2);
+    color: white;
+    font-size: 12px;
+    padding: 4px 12px;
+    border-radius: 20px;
+  }
+
+  .timeline-banner {
+    background: var(--gold);
+    color: white;
+    text-align: center;
+    padding: 14px 24px;
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+  }
+
+  .timeline-banner strong { font-size: 15px; }
+
+  .section {
+    padding: 28px 20px 0;
+  }
+
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 20px;
+    color: var(--earth);
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .section-title::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(to right, var(--gold), transparent);
+  }
+
+  /* Meal Cards */
+  .meal-card {
+    background: white;
+    border-radius: 16px;
+    margin-bottom: 16px;
+    overflow: hidden;
+    box-shadow: 0 2px 12px rgba(107,58,42,0.08);
+    border: 1px solid rgba(200,144,42,0.15);
+  }
+
+  .meal-header {
+    padding: 14px 18px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .meal-header.breakfast { background: linear-gradient(135deg, #FFF3E0, #FFE0B2); }
+  .meal-header.lunch { background: linear-gradient(135deg, #E8F5E9, #C8E6C9); }
+  .meal-header.dinner { background: linear-gradient(135deg, #E8EAF6, #C5CAE9); }
+
+  .meal-emoji { font-size: 28px; }
+
+  .meal-title-block h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 16px;
+    color: var(--dark);
+  }
+
+  .meal-title-block span {
+    font-size: 11px;
+    color: #888;
+    font-weight: 500;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+
+  .meal-body { padding: 16px 18px; }
+
+  .dish-name {
+    font-weight: 500;
+    font-size: 14px;
+    color: var(--earth);
+    margin-bottom: 6px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .dish-name .badge {
+    font-size: 9px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 2px 7px;
+    border-radius: 10px;
+  }
+
+  .badge.eth { background: #FFF3E0; color: var(--gold); border: 1px solid #FFD180; }
+  .badge.int { background: #E3F2FD; color: #1565C0; border: 1px solid #90CAF9; }
+
+  .dish-desc {
+    font-size: 13px;
+    color: #666;
+    line-height: 1.6;
+    margin-bottom: 12px;
+    padding-left: 4px;
+  }
+
+  .dish-desc:last-child { margin-bottom: 0; }
+
+  .bp-benefit {
+    background: linear-gradient(135deg, var(--green), #1B4332);
+    color: white;
+    font-size: 11px;
+    padding: 8px 14px;
+    border-radius: 8px;
+    margin-top: 10px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  /* NOT TO DO */
+  .noto-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-bottom: 12px;
+  }
+
+  .noto-item {
+    background: white;
+    border: 1px solid rgba(176,58,46,0.2);
+    border-left: 3px solid var(--red);
+    border-radius: 10px;
+    padding: 10px 12px;
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .noto-item .icon { font-size: 18px; flex-shrink: 0; }
+
+  .noto-item .text { font-size: 12px; font-weight: 500; color: var(--dark); line-height: 1.4; }
+  .noto-item .sub { font-size: 11px; color: #999; margin-top: 2px; }
+
+  /* STOCK UP */
+  .stock-category {
+    background: white;
+    border-radius: 12px;
+    padding: 14px 16px;
+    margin-bottom: 10px;
+    border: 1px solid rgba(200,144,42,0.15);
+  }
+
+  .stock-cat-title {
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .stock-items {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  .stock-pill {
+    background: var(--light);
+    color: var(--earth);
+    font-size: 12px;
+    font-weight: 500;
+    padding: 4px 10px;
+    border-radius: 20px;
+    border: 1px solid rgba(107,58,42,0.15);
+  }
+
+  /* TIMELINE */
+  .timeline {
+    background: white;
+    border-radius: 16px;
+    overflow: hidden;
+    border: 1px solid rgba(200,144,42,0.2);
+    margin-bottom: 16px;
+  }
+
+  .timeline-row {
+    display: flex;
+    align-items: flex-start;
+    padding: 14px 16px;
+    border-bottom: 1px solid var(--light);
+    gap: 14px;
+  }
+
+  .timeline-row:last-child { border-bottom: none; }
+
+  .t-week {
+    background: var(--earth);
+    color: white;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 4px 10px;
+    border-radius: 8px;
+    flex-shrink: 0;
+    min-width: 72px;
+    text-align: center;
+  }
+
+  .t-week.w2 { background: var(--gold); }
+  .t-week.w4 { background: var(--green); }
+
+  .t-text { font-size: 13px; color: var(--dark); line-height: 1.5; }
+  .t-text strong { color: var(--earth); }
+
+  /* juice box */
+  .juice-box {
+    background: linear-gradient(135deg, #B71C1C, #6A1B1B);
+    border-radius: 16px;
+    padding: 18px;
+    color: white;
+    margin-bottom: 16px;
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+  }
+
+  .juice-box .j-icon { font-size: 36px; flex-shrink: 0; }
+
+  .juice-box h4 {
+    font-family: 'Playfair Display', serif;
+    font-size: 16px;
+    margin-bottom: 4px;
+  }
+
+  .juice-box p { font-size: 12px; opacity: 0.85; line-height: 1.6; }
+
+  /* disclaimer */
+  .disclaimer {
+    background: #FFF8E1;
+    border: 1px solid #FFD54F;
+    border-radius: 12px;
+    padding: 14px 16px;
+    font-size: 12px;
+    color: #5D4037;
+    line-height: 1.6;
+    margin: 20px 20px 32px;
+    display: flex;
+    gap: 10px;
+  }
+
+  .disclaimer .d-icon { font-size: 20px; flex-shrink: 0; }
+
+  .divider { height: 8px; background: var(--light); margin: 0; }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-tag">Personalized BP Diet Plan</div>
+  <h1>Ethiopian–Fusion<br>Blood Pressure Plan</h1>
+  <p>A strict 3-meal daily plan using foods you love, avoiding oats & salmon</p>
+  <div class="profile-chips">
+    <span class="chip">👩 Female, 43 yrs</span>
+    <span class="chip">⚖️ 73 kg</span>
+    <span class="chip">🩺 BP 150/100</span>
+  </div>
+</div>
+
+<!-- TIMELINE BANNER -->
+<div class="timeline-banner">
+  ⚡ Follow strictly for <strong>2–4 weeks</strong> to see measurable BP reduction
+</div>
+
+<!-- JUICE REMINDER -->
+<div class="section">
+  <div class="juice-box">
+    <div class="j-icon">🥤</div>
+    <div>
+      <h4>Keep Your Daily Juice!</h4>
+      <p>Your beetroot + ginger + carrot juice is excellent — drink it every morning or afternoon. Beetroot nitrates are clinically shown to lower systolic BP by 4–10 mmHg. Don't stop this.</p>
+    </div>
+  </div>
+</div>
+
+<!-- BREAKFAST -->
+<div class="section">
+  <div class="section-title">🌅 Breakfast</div>
+  <div class="meal-card">
+    <div class="meal-header breakfast">
+      <div class="meal-emoji">🍳</div>
+      <div class="meal-title-block">
+        <span>Morning Meal · ~380 cal</span>
+        <h3>Firfir with Injera & Eggs</h3>
+      </div>
+    </div>
+    <div class="meal-body">
+      <div class="dish-name"><span class="badge eth">Ethiopian</span> Enqulal Tibs (Spiced Eggs)</div>
+      <div class="dish-desc">2 eggs scrambled with onion, tomato, green pepper, turmeric & black pepper — cooked in a tiny drop of olive oil. Served with a small piece of injera (teff is high in iron & magnesium).</div>
+
+      <div class="dish-name"><span class="badge int">Add-on</span> Avocado Slices</div>
+      <div class="dish-desc">½ ripe avocado sliced on the side — rich in potassium which directly counters sodium's BP-raising effect.</div>
+
+      <div class="dish-name">🍵 Drink</div>
+      <div class="dish-desc">1 cup unsweetened hibiscus tea (Karkade) — studies show it lowers systolic BP by up to 7 mmHg. Or green tea.</div>
+
+      <div class="bp-benefit">💚 Teff in injera is high in magnesium — a key mineral for relaxing blood vessel walls</div>
+    </div>
+  </div>
+</div>
+
+<!-- LUNCH -->
+<div class="section">
+  <div class="section-title">☀️ Lunch</div>
+  <div class="meal-card">
+    <div class="meal-header lunch">
+      <div class="meal-emoji">🫘</div>
+      <div class="meal-title-block">
+        <span>Midday Meal · ~500 cal</span>
+        <h3>Misir Wot & Vegetable Salad</h3>
+      </div>
+    </div>
+    <div class="meal-body">
+      <div class="dish-name"><span class="badge eth">Ethiopian</span> Misir Wot (Red Lentil Stew)</div>
+      <div class="dish-desc">1 cup red lentils cooked with onion, garlic, berbere (low salt), tomato & olive oil. Served with small injera or whole-grain bread. Lentils are loaded with potassium, folate & fiber — all BP-lowering.</div>
+
+      <div class="dish-name"><span class="badge int">International</span> Mediterranean Salad</div>
+      <div class="dish-desc">Tomato, cucumber, red onion, parsley, lemon juice & 1 tsp olive oil dressing. Zero salt — the lemon provides brightness. Add a handful of spinach or arugula.</div>
+
+      <div class="dish-name">💧 Drink</div>
+      <div class="dish-desc">2 large glasses of plain water. You can add cucumber or lemon slices.</div>
+
+      <div class="bp-benefit">💚 Lentils provide ~730mg potassium per cup — potassium is the #1 mineral to counter high BP</div>
+    </div>
+  </div>
+</div>
+
+<!-- DINNER -->
+<div class="section">
+  <div class="section-title">🌙 Dinner</div>
+  <div class="meal-card">
+    <div class="meal-header dinner">
+      <div class="meal-emoji">🍗</div>
+      <div class="meal-title-block">
+        <span>Evening Meal · ~430 cal</span>
+        <h3>Ye'enqulal Tibs & Gomen</h3>
+      </div>
+    </div>
+    <div class="meal-body">
+      <div class="dish-name"><span class="badge eth">Ethiopian</span> Ye'enqulal Tibs (Spiced Egg Stir-fry)</div>
+      <div class="dish-desc">3 eggs scrambled or pan-fried with onion, garlic, tomato, green pepper, turmeric, black pepper & cumin. Cooked in 1 tsp olive oil only — no salt. Use lemon juice for brightness.</div>
+
+      <div class="dish-name"><span class="badge eth">Ethiopian</span> Gomen (Collard Greens)</div>
+      <div class="dish-desc">Collard greens cooked with garlic, onion & ginger. Collard greens are extremely high in calcium and potassium — both critical for BP control.</div>
+
+      <div class="dish-name"><span class="badge int">International</span> Sweet Potato (small)</div>
+      <div class="dish-desc">½ boiled or baked sweet potato — excellent potassium source, and keeps you full. No butter or salt.</div>
+
+      <div class="bp-benefit">💚 Eggs are rich in potassium & magnesium — both directly lower BP. Gomen adds calcium for arterial health</div>
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- NOT TO DO -->
+<div class="section" style="padding-top:28px">
+  <div class="section-title">🚫 Your Not-To-Dos</div>
+  <div class="noto-grid">
+    <div class="noto-item">
+      <div class="icon">🧂</div>
+      <div><div class="text">No Added Salt</div><div class="sub">Use lemon, spices & garlic instead</div></div>
+    </div>
+    <div class="noto-item">
+      <div class="icon">🍖</div>
+      <div><div class="text">No Red Meat</div><div class="sub">No kitfo, tibs with beef, or lamb</div></div>
+    </div>
+    <div class="noto-item">
+      <div class="icon">🍟</div>
+      <div><div class="text">No Fried Food</div><div class="sub">No deep-fried anything</div></div>
+    </div>
+    <div class="noto-item">
+      <div class="icon">🧈</div>
+      <div><div class="text">No Niter Kibbeh</div><div class="sub">Use olive oil only, in small amounts</div></div>
+    </div>
+    <div class="noto-item">
+      <div class="icon">🍺</div>
+      <div><div class="text">No Alcohol</div><div class="sub">No tej, beer, or wine</div></div>
+    </div>
+    <div class="noto-item">
+      <div class="icon">🥤</div>
+      <div><div class="text">No Sugary Drinks</div><div class="sub">No soda, juice packs, or sweet tea</div></div>
+    </div>
+    <div class="noto-item">
+      <div class="icon">🧀</div>
+      <div><div class="text">No Processed Food</div><div class="sub">No canned, packaged or fast food</div></div>
+    </div>
+    <div class="noto-item">
+      <div class="icon">☕</div>
+      <div><div class="text">Limit Coffee</div><div class="sub">Max 1 cup/day, no added sugar</div></div>
+    </div>
+    <div class="noto-item">
+      <div class="icon">🫙</div>
+      <div><div class="text">No Mitmita/Salt Mixes</div><div class="sub">Many spice blends hide sodium</div></div>
+    </div>
+    <div class="noto-item">
+      <div class="icon">🍰</div>
+      <div><div class="text">No Sweets or Cakes</div><div class="sub">Sugar spikes BP & causes inflammation</div></div>
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- STOCK UP -->
+<div class="section" style="padding-top:28px">
+  <div class="section-title">🛒 Stock Up On These</div>
+
+  <div class="stock-category">
+    <div class="stock-cat-title">🇪🇹 Ethiopian Staples</div>
+    <div class="stock-items">
+      <span class="stock-pill">Teff flour / Injera</span>
+      <span class="stock-pill">Red lentils (misir)</span>
+      <span class="stock-pill">Yellow split peas (shiro)</span>
+      <span class="stock-pill">Collard greens (gomen)</span>
+      <span class="stock-pill">Berbere (low-salt)</span>
+      <span class="stock-pill">Garlic</span>
+      <span class="stock-pill">Fresh ginger</span>
+    </div>
+  </div>
+
+  <div class="stock-category">
+    <div class="stock-cat-title">🥦 Vegetables</div>
+    <div class="stock-items">
+      <span class="stock-pill">Spinach</span>
+      <span class="stock-pill">Tomatoes</span>
+      <span class="stock-pill">Cucumber</span>
+      <span class="stock-pill">Sweet potato</span>
+      <span class="stock-pill">Beetroot</span>
+      <span class="stock-pill">Carrots</span>
+      <span class="stock-pill">Celery</span>
+      <span class="stock-pill">Zucchini</span>
+      <span class="stock-pill">Avocado</span>
+    </div>
+  </div>
+
+  <div class="stock-category">
+    <div class="stock-cat-title">🍌 Fruits</div>
+    <div class="stock-items">
+      <span class="stock-pill">Banana</span>
+      <span class="stock-pill">Lemon</span>
+      <span class="stock-pill">Watermelon</span>
+      <span class="stock-pill">Papaya</span>
+      <span class="stock-pill">Kiwi</span>
+    </div>
+  </div>
+
+  <div class="stock-category">
+    <div class="stock-cat-title">🫘 Proteins</div>
+    <div class="stock-items">
+      <span class="stock-pill">Eggs</span>
+      <span class="stock-pill">Red lentils</span>
+      <span class="stock-pill">Chickpeas</span>
+      <span class="stock-pill">White beans</span>
+    </div>
+  </div>
+
+  <div class="stock-category">
+    <div class="stock-cat-title">🫙 Healthy Extras</div>
+    <div class="stock-items">
+      <span class="stock-pill">Olive oil (extra virgin)</span>
+      <span class="stock-pill">Walnuts</span>
+      <span class="stock-pill">Flaxseeds</span>
+      <span class="stock-pill">Hibiscus tea</span>
+      <span class="stock-pill">Green tea</span>
+      <span class="stock-pill">Turmeric</span>
+      <span class="stock-pill">Black pepper</span>
+      <span class="stock-pill">Whole grain bread</span>
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- TIMELINE -->
+<div class="section" style="padding-top:28px; padding-bottom: 0;">
+  <div class="section-title">📅 When Will You See Change?</div>
+  <div class="timeline">
+    <div class="timeline-row">
+      <div class="t-week">Days 3–5</div>
+      <div class="t-text"><strong>First signs:</strong> Less bloating, reduced headaches, slightly better energy as sodium clears your system</div>
+    </div>
+    <div class="timeline-row">
+      <div class="t-week w2">Week 1–2</div>
+      <div class="t-text"><strong>Noticeable change:</strong> BP may drop 5–10 mmHg. You'll feel lighter, headaches should ease significantly</div>
+    </div>
+    <div class="timeline-row">
+      <div class="t-week w4">Week 3–4</div>
+      <div class="t-text"><strong>Measurable results:</strong> BP reduction of 10–15 mmHg is realistic with strict adherence. Sustained improvement if you continue</div>
+    </div>
+  </div>
+</div>
+
+<!-- DISCLAIMER -->
+<div class="disclaimer">
+  <div class="d-icon">⚠️</div>
+  <div>This plan supports — but does not replace — medical treatment. At 150/100 with headaches, please continue seeing your doctor. If you feel dizzy, have chest pain, or your headache worsens, seek emergency care immediately.</div>
+</div>
+
+</body>
+</html>
